@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+ <category label="32050">
+ <setting id="lsep0" label="32051" type="lsep" enable="false"/>
+ <setting id="avi" label=".avi" type="bool" default="true"/>
+ <setting id="mkv" label=".mkv" type="bool" default="true"/>
+ <setting id="mpg" label=".mpg" type="bool" default="true"/>
+ <setting id="mpeg" label=".mpeg" type="bool" default="true"/>
+ <setting id="mp4" label=".mp4" type="bool" default="true"/>
+ <setting id="wmv" label=".wmv" type="bool" default="true"/>
+ <setting id="mov" label=".mov" type="bool" default="true"/>
+ <setting id="formats" label="32052" type="text" default=""/>
+<setting id="lsep2" label="32053" type="lsep" enable="false" />
+ </category>
+ <category label="32054">
+ <setting id="size" label="32055" type="enum" lvalues="32001|32002|32003|32004|32005|32006"/>
+ <setting id="moveloc" label="32056" type="folder" option="writeable" visible="false"/>
+ <setting id="to_email" label="32057" type="bool" default="false"/>
+ <setting id="address" label="32058" type="text" visible="eq(-1,true)" default=""/>
+ <setting id="to_disk" label="32059" type="bool" default="false"/>
+ <setting id="location" label="32060" type="folder" visible="eq(-1,true)" option="writeable"/>
+ </category>
+</settings>

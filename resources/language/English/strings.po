@@ -117,5 +117,50 @@ msgctxt "#32066"
 msgid "Found %s loose files"
 msgstr ""
 
+msgctxt "#32067"
+msgid "Close"
+msgstr ""
 
+msgctxt "#32068"
+msgid "Click file to rename, play (after rename, click to move)"
+msgstr ""
 
+msgctxt "#32069"
+msgid "Select Action"
+msgstr ""
+
+msgctxt "#32070"
+msgid "Move"
+msgstr ""
+
+msgctxt "#32071"
+msgid "Rename"
+msgstr ""
+
+msgctxt "#32072"
+msgid "Play"
+msgstr ""
+
+msgctxt "#32073"
+msgid "You do not have permission to make that change."
+msgstr ""
+
+msgctxt "#32074"
+msgid "Select new folder"
+msgstr ""
+
+msgctxt "#32075"
+msgid "Rename File"
+msgstr ""
+
+msgctxt "#32076"
+msgid "Rename : %s"
+msgstr ""
+
+msgctxt "#32077"
+msgid "New name"
+msgstr ""
+
+msgctxt "#32078"
+msgid "Update library now?"
+msgstr ""

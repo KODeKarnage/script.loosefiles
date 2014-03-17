@@ -13,7 +13,7 @@
     <extension point="xbmc.addon.metadata">
         <summary lang="en">Loose Files</summary>
         <description lang="en">Compares the files in your Video Sources with those in your Library.
-            The unmatched files are provided in a list and you can play them, ignore them, rename them, or move them to a different folder.</description>
+            The unmatched files are provided in a list and you can play them, rename them, or move them to a different folder.</description>
         <language>en</language>
         <platform>all</platform>
         <license>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</license>

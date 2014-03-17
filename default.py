@@ -102,7 +102,9 @@ for i, v in enumerate(def_ext):
 
 def jq(query):
     xbmc_request = json.dumps(query)
+    #log(xbmc_request)
     result = xbmc.executeJSONRPC(xbmc_request)
+    #log(result)
     return json.loads(result)['result']
 
 
@@ -253,13 +255,15 @@ class yGUI(xbmcgui.WindowXMLDialog):
         for i, file_tup in enumerate(self.data):
             #log(file_tup)
             f = file_tup[3]
-            #log('file string = ' + f)
-            self.thumb = os.path.join(THUMBS_CACHE_PATH,xbmc.getCacheThumbName(f)[0],xbmc.getCacheThumbName(f))
-            #log('thumb')
-            #log(self.thumb)
+
+            # thumbs not working.
+            #get_thumb = jq('{ "jsonrpc": "2.0", "method": "Files.GetFileDetails", "params": { "file": "C:\testTV\Air\Season1\Air S01E14 fartsjesus.avi", "media": "files", "properties": ["thumbnail"] } , "id": 49152 }' )
+            #log(get_thumb)
+            #self.thumb = os.path.join(THUMBS_CACHE_PATH,xbmc.getCacheThumbName(f)[0],xbmc.getCacheThumbName(f))
+
 
             self.title  = file_tup[0]
-            self.tmp    = xbmcgui.ListItem(label=self.title, thumbnailImage=self.thumb)
+            self.tmp    = xbmcgui.ListItem(label=self.title) #, thumbnailImage=self.thumb)
             self.name_list.addItem(self.tmp)
             self.itemcount += 1
 

@@ -18,8 +18,7 @@
 #  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
 #  http://www.gnu.org/copyleft/gpl.html
 #
-#  This script uses significant elements from service.skin.widgets
-#  by Martijn & phil65
+
 
 import xbmc
 import json
@@ -170,7 +169,7 @@ def get_all_paths(library_paths, extensions):
                 if file_tup not in files:
                     files.append(file_tup)
 
-    for x in files:
+    #for x in files:
         #log(str(x[3]) + '\n')
 
     return files
@@ -347,7 +346,7 @@ class yGUI(xbmcgui.WindowXMLDialog):
 
     def rename(self):
         #log(self.data[self.pos][0])
-        choose_name = xbmc.Keyboard(self.data[self.pos][0],lAng(32075))
+        choose_name = xbmc.Keyboard(self.data[self.pos][0],lang(32075))
         choose_name.doModal()
         if choose_name.isConfirmed():
             are_you_sure = dialog.yesno(lang(32076) % self.data[self.pos][0],lang(32077),'%s' % choose_name.getText())

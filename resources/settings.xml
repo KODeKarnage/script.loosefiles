@@ -19,5 +19,6 @@
  <setting id="address" label="32058" type="text" visible="eq(-1,true)" default=""/>
  <setting id="to_disk" label="32059" type="bool" default="false"/>
  <setting id="location" label="32060" type="folder" visible="eq(-1,true)" option="writeable"/>
+ <setting id="log" label="32079" type="bool" default="false"/>
  </category>
 </settings>

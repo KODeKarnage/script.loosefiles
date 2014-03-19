@@ -164,3 +164,7 @@ msgstr ""
 msgctxt "#32078"
 msgid "Update library now?"
 msgstr ""
+
+msgctxt "#32079"
+msgid "Debug Logging"
+msgstr ""

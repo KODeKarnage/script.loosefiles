@@ -45,11 +45,15 @@ extensions     = []
 items_selected = []
 
 
-def log(message):
-    xbmc.log(msg = 'LooseFiles -=- ' + str(message))
-
 def correct_bool(boolean):
     return True if boolean == 'true' else False
+
+logging  = correct_bool(__setting__('log'))
+
+def log(message):
+    if logging:
+        xbmc.log(msg = 'LooseFiles -=- ' + str(message))
+
 
 other_ext = __setting__('formats')
 
@@ -64,6 +68,7 @@ mpeg = correct_bool(__setting__('mpeg'))
 mp4  = correct_bool(__setting__('mp4'))
 wmv  = correct_bool(__setting__('wmv'))
 mov  = correct_bool(__setting__('mov'))
+
 
 to_email = correct_bool(__setting__('to_email'))
 to_disk  = correct_bool(__setting__('to_disk'))
@@ -97,14 +102,14 @@ for i, v in enumerate(def_ext):
     if v:
         extensions.append(str_ext[i])
 
-#log(extensions)
+log(extensions)
 
 
 def jq(query):
     xbmc_request = json.dumps(query)
-    #log(xbmc_request)
+    log(xbmc_request)
     result = xbmc.executeJSONRPC(xbmc_request)
-    #log(result)
+    log(result)
     return json.loads(result)['result']
 
 
@@ -114,19 +119,19 @@ def filter_file(full_file, extensions):
     fileName, fileExtension = os.path.splitext(full_file)
 
     if not fileExtension:
-        #log('no extension')
+        log('no extension')
         return
 
 
     if fileExtension[1:] not in extensions:
-        #log(str(fileExtension[1:]) + ' not in allowable extensions')
+        log(str(fileExtension[1:]) + ' not in allowable extensions')
         return
 
     if size != 'off':
         # check file size
         fsize = os.stat(full_file).st_size
         if fsize < size:
-            #log(str(fsize) + ' too small')
+            log(str(fsize) + ' too small')
             return
 
     path, filenom = os.path.split(fileName)
@@ -145,34 +150,44 @@ def get_all_paths(library_paths, extensions):
     if 'sources' in res and res['sources']:
         for s in res['sources']:
             dirs.append(s['file'])
+
     count = 0
     while dirs:
-        w = os.walk(dirs[0])
+        base_path = dirs[0]
+        q = {"jsonrpc": "2.0","id": 1, "method": "Files.GetDirectory","params": {"directory":"", "media": "files", "properties":["file"]}}
+        q['params']['directory'] = base_path
+        res = jq(q)
+        ##log(str(base_path) + ' contains files')
+        ##log(res)
         del dirs[0]
-        for r,d,f in w:
-            for folder in d:
-                new_dir = os.path.join(r,folder)
-                if new_dir not in dirs:
-                    dirs.append(new_dir)
-            for fyle in f:
-                full_file = os.path.join(r,fyle)
 
-                count += 1
-                if count % 50 == 0:
-                    progress.update(0,lang(32062),r)
+        if 'files' in res and res['files']:
+            for f in res['files']:
+                if f['filetype'] == 'directory':
+                    if f['file'] not in dirs:
+                        dirs.append(f['file'])
+                else:
+                    full_file = os.path.join(base_path,f['file'])
+                    log(full_file)
 
-                if full_file in library_paths:
-                    continue
+                    count += 1
+                    if count % 50 == 0:
+                        progress.update(0,lang(32062),f['file'])
 
-                file_tup = filter_file(full_file, extensions)
-                if not file_tup:
-                    continue
 
-                if file_tup not in files:
-                    files.append(file_tup)
+                    if full_file in library_paths:
+                        continue
 
-    #for x in files:
-        #log(str(x[3]) + '\n')
+                    file_tup = filter_file(full_file, extensions)
+                    if not file_tup:
+                        continue
+
+                    if file_tup not in files:
+                        files.append(file_tup)
+
+    for x in files:
+        log(str(x[3]) + '\n')
+        pass
 
     return files
 
@@ -183,6 +198,8 @@ def get_library_paths():
     if 'episodes' in res and res['episodes']:
         for ep in res['episodes']:
             if 'file' in ep and ep['file']:
+
+                # insert rar/zip fix here
                 library_paths.append(ep['file'])
     return library_paths
 
@@ -211,7 +228,7 @@ def send_output(recipient, files):
             smtp = smtplib.SMTP('gmail-smtp-in.l.google.com')
             smtp.sendmail(msg['From'], msg['To'], msg.as_string(9))
             smtp.quit()
-            #log('email sent')
+            log('email sent')
 
         except:
             pass
@@ -239,7 +256,7 @@ class yGUI(xbmcgui.WindowXMLDialog):
 
 
     def onInit(self):
-        #log('window_init')
+        log('window_init')
         self.ok = self.getControl(5)
         self.ok.setLabel(lang(32067))
         self.hdg = self.getControl(1)
@@ -253,12 +270,10 @@ class yGUI(xbmcgui.WindowXMLDialog):
         self.itemcount = 0
 
         for i, file_tup in enumerate(self.data):
-            #log(file_tup)
             f = file_tup[3]
 
             # thumbs not working.
             #get_thumb = jq('{ "jsonrpc": "2.0", "method": "Files.GetFileDetails", "params": { "file": "C:\testTV\Air\Season1\Air S01E14 fartsjesus.avi", "media": "files", "properties": ["thumbnail"] } , "id": 49152 }' )
-            #log(get_thumb)
             #self.thumb = os.path.join(THUMBS_CACHE_PATH,xbmc.getCacheThumbName(f)[0],xbmc.getCacheThumbName(f))
 
 
@@ -273,7 +288,7 @@ class yGUI(xbmcgui.WindowXMLDialog):
         self.ok.controlRight(self.name_list)
         self.setFocus(self.name_list)
 
-        #log('window_init_End')
+        log('window_init_End')
 
 
     def onAction(self, action):
@@ -291,7 +306,7 @@ class yGUI(xbmcgui.WindowXMLDialog):
 
     def onClick(self, controlID):
         self.pos    = self.name_list.getSelectedPosition()
-        #log('position selected = ' + str(self.pos))
+        log('position selected = ' + str(self.pos))
         if controlID == 5:
 
             self.running = False
@@ -319,7 +334,7 @@ class yGUI(xbmcgui.WindowXMLDialog):
     def play(self):
         self.pos    = self.name_list.getSelectedPosition()
         avi = self.data[self.pos][3].replace("\\","\\\\")
-        #log(avi)
+        log(avi)
         xbmc.Player().play(avi)
         self.playing = True
 
@@ -349,18 +364,17 @@ class yGUI(xbmcgui.WindowXMLDialog):
 
 
     def rename(self):
-        #log(self.data[self.pos][0])
+        log(self.data[self.pos][0])
         choose_name = xbmc.Keyboard(self.data[self.pos][0],lang(32075))
         choose_name.doModal()
         if choose_name.isConfirmed():
             are_you_sure = dialog.yesno(lang(32076) % self.data[self.pos][0],lang(32077),'%s' % choose_name.getText())
-            #log(are_you_sure)
             if are_you_sure:
-                #log('yes, im sure')
+                log('yes, im sure')
                 new_full_path = os.path.join(self.data[self.pos][2],choose_name.getText()+self.data[self.pos][1])
 
-                #log(self.data[self.pos][3])
-                #log(new_full_path)
+                log(self.data[self.pos][3])
+                log(new_full_path)
                 # insert rename function here
                 try:
                     shutil.move( self.data[self.pos][3] , new_full_path )
@@ -384,8 +398,6 @@ class yGUI(xbmcgui.WindowXMLDialog):
 if __name__ == "__main__":
 
     lp = get_library_paths()
-    #log('lp')
-    #log(lp)
     f = get_all_paths(lp, extensions)
     orphans = send_output(address, f)
     dialog.ok('Loose Files',lang(32065),lang(32066) % orphans)
@@ -400,22 +412,22 @@ if __name__ == "__main__":
             myWindow.close()
             myWindow.playing = False
             wait_for_player = True
-            #log('waiting for player')
+            log('waiting for player')
         if wait_for_player:
-            #log('now waiting')
+            log('now waiting')
             if not myPlayer.isPlaying():
                 myWindow.show()
                 wait_for_player = False
-                #log('player stopped')
+                log('player stopped')
         if myWindow.refresh == True:
-            #log('refreshing')
+            log('refreshing')
             myWindow.refresh = False
             myWindow.close()
             xbmc.sleep(5)
             myWindow.show()
 
     if myWindow.change:
-        #log('changes: update library')
+        log('changes: update library')
         update_lib = dialog.yesno('Loose Files',lang(32078))
         if update_lib:
             xbmc.executebuiltin('UpdateLibrary(video)')
@@ -423,6 +435,6 @@ if __name__ == "__main__":
     del myWindow
     del myPlayer
 
-    #log('Exited')
+    log('Exited')
 
 

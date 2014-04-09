@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<window>
+<defaultcontrol always="true">10</defaultcontrol>
+	<animation effect="fade" time="250">WindowOpen</animation>
+	<animation effect="fade" time="250">WindowClose</animation>
+
+<controls>
+
+	<!-- MAIN -->
+	<control type="group">
+			<posx>510</posx>
+			<posy>100</posy>
+			<width>250</width>
+			<height>520</height>
+
+		<!-- MAIN BACKGROUND IMAGE -->
+		<control type="image" description="BG">
+			<texture>lfbg.png</texture>
+		</control>
+
+
+		<!-- MENU BUTTONS -->
+		<control type="grouplist" id="100" >
+			<posx>10</posx>
+			<posy>20</posy>
+			<width>250</width>
+			<height>520</height>
+			<itemgap>4</itemgap>
+			<onleft>100</onleft>
+			<onright>100</onright>
+			<onup>100</onup>
+			<ondown>100</ondown>
+
+		 	<control type="button" id="10">
+		 		<label>New Search</label>
+				<width>230</width>
+				<height>40</height>
+				<align>center</align>
+				<focusedcolor>FF50e0c7</focusedcolor>
+				<texturefocus border="2">ButtonFO.png</texturefocus>
+				<texturenofocus border="3">ButtonNF.png</texturenofocus>
+				<textoffsetx>20</textoffsetx>
+			</control>
+
+			<control type="button" id="220">
+		 		<label>------</label>
+				<width>230</width>
+				<height>40</height>
+				<align>center</align>
+				<enabled>False</enabled>
+				<focusedcolor>FF50e0c7</focusedcolor>
+				<texturefocus border="2">ButtonFO.png</texturefocus>
+				<texturenofocus border="3">ButtonNF.png</texturenofocus>
+				<textoffsetx>20</textoffsetx>
+			</control>
+
+		 	<control type="button" id="1001">
+				<width>230</width>
+				<height>40</height>
+				<align>center</align>
+				<focusedcolor>FF50e0c7</focusedcolor>
+				<texturefocus border="2">ButtonFO.png</texturefocus>
+				<texturenofocus border="3">ButtonNF.png</texturenofocus>
+				<textoffsetx>20</textoffsetx>
+			</control>
+
+		 	<control type="button" id="1002">
+				<width>230</width>
+				<height>40</height>
+				<align>center</align>
+				<focusedcolor>FF50e0c7</focusedcolor>
+				<texturefocus border="2">ButtonFO.png</texturefocus>
+				<texturenofocus border="3">ButtonNF.png</texturenofocus>
+				<textoffsetx>20</textoffsetx>
+			</control>
+
+		 	<control type="button" id="1003">
+				<width>230</width>
+				<height>40</height>
+				<align>center</align>
+				<focusedcolor>FF50e0c7</focusedcolor>
+				<texturefocus border="2">ButtonFO.png</texturefocus>
+				<texturenofocus border="3">ButtonNF.png</texturenofocus>
+				<textoffsetx>20</textoffsetx>
+			</control>
+
+		 	<control type="button" id="1004">
+				<width>230</width>
+				<height>40</height>
+				<align>center</align>
+				<focusedcolor>FF50e0c7</focusedcolor>
+				<texturefocus border="2">ButtonFO.png</texturefocus>
+				<texturenofocus border="3">ButtonNF.png</texturenofocus>
+				<textoffsetx>20</textoffsetx>
+			</control>
+
+		 	<control type="button" id="1005">
+				<width>230</width>
+				<height>40</height>
+				<align>center</align>
+				<focusedcolor>FF50e0c7</focusedcolor>
+				<texturefocus border="2">ButtonFO.png</texturefocus>
+				<texturenofocus border="3">ButtonNF.png</texturenofocus>
+				<textoffsetx>20</textoffsetx>
+			</control>
+
+		 	<control type="button" id="1006">
+				<width>230</width>
+				<height>40</height>
+				<align>center</align>
+				<focusedcolor>FF50e0c7</focusedcolor>
+				<texturefocus border="2">ButtonFO.png</texturefocus>
+				<texturenofocus border="3">ButtonNF.png</texturenofocus>
+				<textoffsetx>20</textoffsetx>
+			</control>
+
+		 	<control type="button" id="1007">
+				<width>230</width>
+				<height>40</height>
+				<align>center</align>
+				<focusedcolor>FF50e0c7</focusedcolor>
+				<texturefocus border="2">ButtonFO.png</texturefocus>
+				<texturenofocus border="3">ButtonNF.png</texturenofocus>
+				<textoffsetx>20</textoffsetx>
+			</control>
+
+		 	<control type="button" id="1008">
+				<width>230</width>
+				<height>40</height>
+				<align>center</align>
+				<focusedcolor>FF50e0c7</focusedcolor>
+				<texturefocus border="2">ButtonFO.png</texturefocus>
+				<texturenofocus border="3">ButtonNF.png</texturenofocus>
+				<textoffsetx>20</textoffsetx>
+			</control>
+
+		 	<control type="button" id="1009">
+				<width>230</width>
+				<height>40</height>
+				<align>center</align>
+				<focusedcolor>FF50e0c7</focusedcolor>
+				<texturefocus border="2">ButtonFO.png</texturefocus>
+				<texturenofocus border="3">ButtonNF.png</texturenofocus>
+				<textoffsetx>20</textoffsetx>
+			</control>
+
+		 	<control type="button" id="1010">
+				<width>230</width>
+				<height>40</height>
+				<align>center</align>
+				<focusedcolor>FF50e0c7</focusedcolor>
+				<texturefocus border="2">ButtonFO.png</texturefocus>
+				<texturenofocus border="3">ButtonNF.png</texturenofocus>
+				<textoffsetx>20</textoffsetx>
+			</control>
+
+		</control>
+
+	</control>
+</controls>
+</window>
+
+		

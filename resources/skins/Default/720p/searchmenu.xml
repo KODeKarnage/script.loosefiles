@@ -33,7 +33,6 @@
 			<ondown>100</ondown>
 
 		 	<control type="button" id="10">
-		 		<label>New Search</label>
 				<width>230</width>
 				<height>40</height>
 				<align>center</align>

@@ -122,7 +122,7 @@ msgid "Close"
 msgstr ""
 
 msgctxt "#32068"
-msgid "Click file to rename, play (after rename, click to move)"
+msgid "Click file to play, right click to rename or move"
 msgstr ""
 
 msgctxt "#32069"
@@ -168,3 +168,36 @@ msgstr ""
 msgctxt "#32079"
 msgid "Debug Logging"
 msgstr ""
+
+msgctxt "#32080"
+msgid "New Search"
+msgstr ""
+
+msgctxt "#32081"
+msgid "Rename"
+msgstr ""
+
+msgctxt "#32082"
+msgid "Move"
+msgstr ""
+
+msgctxt "#32083"
+msgid "Find all lost files"
+msgstr ""
+
+msgctxt "#32084"
+msgid "Search lost files"
+msgstr ""
+
+msgctxt "#32085"
+msgid "Search all files"
+msgstr ""
+
+msgctxt "#32086"
+msgid "Re-index"
+msgstr ""
+
+msgctxt "#32087"
+msgid "Use Cache"
+msgstr ""
+

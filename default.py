@@ -156,9 +156,8 @@ def filter_file(full_file, extensions):
 	path, filenom = os.path.split(fileName)
 
 	if search:
-		for word in searchwords:
-			if word.lower() not in filenom.lower():
-				return
+		if any(word.lower() not in filenom.lower() for word in searchwords):
+			return
 
 	return [filenom,fileExtension,path,full_file]
 
@@ -166,20 +165,18 @@ def filter_file(full_file, extensions):
 def filter_list():
 	global searchwords
 
+	new_list = []
+
 	with open(cachefile,'r') as f:
 		l = f.readlines()
-		z = [x[3] for x in l]
 
-		new_list = []
-		for af in z:
+		for af in l:
 			fileName, fileExtension = os.path.splitext(af)
 			path, filenom = os.path.split(fileName)
-			for word in searchwords:
-				if word.lower() not in filenom.lower():
-					break
+
+			if all(word.lower() in filenom.lower() for word in searchwords) and [filenom,fileExtension,path,af] not in new_list:
 				new_list.append([filenom,fileExtension,path,af])
 					
-
 	return new_list
 
 
@@ -353,29 +350,62 @@ class yGUI(xbmcgui.WindowXMLDialog):
 				self.name_list.getListItem(itm).select(False)
 
 	def onClick(self, controlID):
+		log('controlid = ' + str(controlID))
 		self.pos    = self.name_list.getSelectedPosition()
 		log('position selected = ' + str(self.pos))
+
 		if controlID == 5:
 
 			self.running = False
-		else:
-			if self.name_list.getSelectedItem().isSelected():
 
-				move_or_rename = dialog.yesno('Loose Files',lang(32069),nolabel = lang(32070), yeslabel=lang(32071))
+		elif controlID in [117, 101] and not contextagogone:
+			log('context menu')
 
-				if move_or_rename == 1:
+			contextagogone = True
+			myContext = contextwindow('contextwindow.xml', scriptPath, 'Default')
+			myContext.doModal()
+
+			if self.contextoption:
+				if self.contextoption == 110:
 					self.rename()
-				else:
+				elif self.contextoption == 220:
 					self.move()
 
-			else:
+			del myContext
+			contextagogone = False
+		else:
 
-				rename_or_play = dialog.yesno('Loose Files',lang(32069),nolabel = lang(32071), yeslabel=lang(32072))
+			# play the video
+			self.play()
 
-				if rename_or_play == 1:
-					self.play()
-				else:
+
+	def onAction(self, Action):
+
+		contextagogone = False
+
+		if Action in [10,92]:
+			self.close()
+
+		elif Action in [117, 101] and not contextagogone:
+			log('context menu')
+	
+			self.pos    = self.name_list.getSelectedPosition()
+
+			contextagogone = True
+			myContext = contextwindow('contextwindow.xml', scriptPath, 'Default')
+			myContext.doModal()
+
+			if myContext.contextoption:
+				if myContext.contextoption == 110:
 					self.rename()
+				elif myContext.contextoption == 220:
+					self.move()
+
+			del myContext
+
+
+
+
 
 	def play(self):
 		self.pos    = self.name_list.getSelectedPosition()
@@ -383,6 +413,7 @@ class yGUI(xbmcgui.WindowXMLDialog):
 		log(avi)
 		xbmc.Player().play(avi)
 		self.playing = True
+
 
 	def move(self):
 		new_location = dialog.browse(3,lang(32074), 'videos','', False, False, self.data[self.pos][2])
@@ -394,6 +425,7 @@ class yGUI(xbmcgui.WindowXMLDialog):
 				shutil.move( self.data[self.pos][3] , new_full_path )
 			except IOError:
 				# on error escape, notify via dialog.ok
+				log('permission error')
 				dialog.ok('Loose Files',lang(32073))
 			else:
 
@@ -421,11 +453,13 @@ class yGUI(xbmcgui.WindowXMLDialog):
 
 				log(self.data[self.pos][3])
 				log(new_full_path)
+
 				# insert rename function here
 				try:
 					shutil.move( self.data[self.pos][3] , new_full_path )
 				except IOError:
 					# on error escape, notify via dialog.ok
+					log('permission error')
 					dialog.ok('Loose Files',lang(32073))
 				else:
 
@@ -448,6 +482,11 @@ class lfmenu(xbmcgui.WindowXMLDialog):
 		global searchstring
 		global rescan
 		global search
+
+		self.getControl(10).setLabel(lang(32083))
+		self.getControl(1110).setLabel(lang(32084))
+		self.getControl(1120).setLabel(lang(32085))
+		self.getControl(1130).setLabel(lang(32086))
 
 		log('window_init_End')
 
@@ -475,11 +514,11 @@ class lfmenu(xbmcgui.WindowXMLDialog):
 			self.close()
 		elif controlID == 1130:
 			cont = self.getControl(1130)
-			if cont.getLabel() == 'Rescan':
-				cont.setLabel('Skip Rescan')
+			if cont.getLabel() == lang(32086):
+				cont.setLabel(lang(32087))
 				rescan = False
 			else:
-				cont.setLabel('Rescan')
+				cont.setLabel(lang(32086))
 				rescan = True
 
 
@@ -488,6 +527,8 @@ class searchwindow(xbmcgui.WindowXMLDialog):
 	def onInit(self):
 		log('window_init')
 		self.prevs = []
+
+		self.getControl(10).setLabel(lang(32080))
 
 		with open(searchfile, 'a+') as f:
 			self.prevtot = f.readlines()
@@ -509,6 +550,7 @@ class searchwindow(xbmcgui.WindowXMLDialog):
 
 
 	def onClick(self, controlID):
+
 		global searchstring
 
 		if controlID == 10:
@@ -519,6 +561,7 @@ class searchwindow(xbmcgui.WindowXMLDialog):
 			searchstring = self.getControl(controlID).getLabel()
 		self.save_search(searchstring)
 		self.close()
+
 
 
 	def onAction(self, action):
@@ -541,17 +584,37 @@ class searchwindow(xbmcgui.WindowXMLDialog):
 					f.write(s + '\n')
 
 
+class contextwindow(xbmcgui.WindowXMLDialog):
+	
+	def onInit(self):
+		self.started = True
+		self.contextoption = ''	
+
+		self.getControl(110).setLabel(lang(32081))
+		self.getControl(220).setLabel(lang(32082))
+
+
+		self.setFocus(self.getControl(110))
+
+	def onClick(self, controlID):
+		self.contextoption = controlID
+		self.close()
+
+
 if __name__ == "__main__":
 	log('started')
 
 	myMenu = lfmenu("lfmenu.xml", scriptPath, 'Default')
 	myMenu.doModal()
 
+	del myMenu
+
 	if not bail:
 
 		if search:
 			mySearch = searchwindow('searchmenu.xml', scriptPath, 'Default')
 			mySearch.doModal()
+			del mySearch
 
 		if not bail:
 
@@ -568,8 +631,10 @@ if __name__ == "__main__":
 
 			# clean searchstring and break into individual words
 			pattern = r'(\w*)'
-			searchwords = re.findall(pattern,searchstring)
+			sw = re.findall(pattern,searchstring)
+			searchwords = [s for s in sw if s]
 
+			log('searchwords = ' +str(searchwords))
 
 			# get all the files from sources that meet criteria
 			if rescan:

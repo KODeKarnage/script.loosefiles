@@ -10,13 +10,12 @@
 	<!-- MAIN -->
 	<control type="group">
 			<posx>510</posx>
-			<posy>240</posy>
+			<posy>300</posy>
 			<width>250</width>
-			<height>200</height>
+			<height>100</height>
 
-		<!-- MAIN BACKGROUND IMAGE - CIRCUIT -->
+		<!-- MAIN BACKGROUND IMAGE -->
 		<control type="image" description="BG">
-
 			<texture>lfbg.png</texture>
 		</control>
 
@@ -24,16 +23,16 @@
 		<!-- MENU BUTTONS -->
 		<control type="grouplist" id="100" >
 			<posx>10</posx>
-			<posy>20</posy>
+			<posy>10</posy>
 			<width>250</width>
-			<height>200</height>
+			<height>100</height>
 			<itemgap>4</itemgap>
 			<onleft>100</onleft>
 			<onright>100</onright>
 			<onup>100</onup>
 			<ondown>100</ondown>
 
-		 	<control type="button" id="10">
+		 	<control type="button" id="110">
 				<width>230</width>
 				<height>40</height>
 				<align>center</align>
@@ -43,35 +42,16 @@
 				<textoffsetx>20</textoffsetx>
 			</control>
 
-		 	<control type="button" id="1110">
+			<control type="button" id="220">
 				<width>230</width>
 				<height>40</height>
 				<align>center</align>
+				<enabled>False</enabled>
 				<focusedcolor>FF50e0c7</focusedcolor>
 				<texturefocus border="2">ButtonFO.png</texturefocus>
 				<texturenofocus border="3">ButtonNF.png</texturenofocus>
 				<textoffsetx>20</textoffsetx>
 			</control>
-
-		 	<control type="button" id="1120">
-				<width>230</width>
-				<height>40</height>
-				<align>center</align>
-				<focusedcolor>FF50e0c7</focusedcolor>
-				<texturefocus border="2">ButtonFO.png</texturefocus>
-				<texturenofocus border="3">ButtonNF.png</texturenofocus>
-				<textoffsetx>20</textoffsetx>
-			</control>
-
-		 	<control type="button" id="1130">
-				<width>230</width>
-				<height>40</height>
-				<align>center</align>
-				<focusedcolor>FF50e0c7</focusedcolor>
-				<texturefocus border="2">ButtonFO.png</texturefocus>
-				<texturenofocus border="3">ButtonNF.png</texturenofocus>
-				<textoffsetx>20</textoffsetx>
-			</control>									
 
 		</control>
 

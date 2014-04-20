@@ -234,7 +234,7 @@ def scan_files(library_paths, extensions):
 
 	with open(cachefile, 'w+') as f:
 		for a in all_files:
-			f.write(a + '\n')
+			f.write(a.encode('utf-8') + '\n')
 
 	return files
 
@@ -284,7 +284,7 @@ def send_output(recipient, files):
 		try:
 			with open(os.path.join(location,'LooseFilesOutput.txt'), 'w') as f:
 				for x in paths:
-					f.write(str(x) + '\n')
+					f.write(x.encode('utf-8') + '\n')
 		except:
 			pass
 
@@ -581,7 +581,7 @@ class searchwindow(xbmcgui.WindowXMLDialog):
 		with open(searchfile, 'w+') as f:
 			for i, s in enumerate(new):
 				if i<10:
-					f.write(s + '\n')
+					f.write(s.encode('utf-8') + '\n')
 
 
 class contextwindow(xbmcgui.WindowXMLDialog):

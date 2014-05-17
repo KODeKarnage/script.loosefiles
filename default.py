@@ -41,8 +41,8 @@ dialog = xbmcgui.Dialog()
 THUMBS_CACHE_PATH = xbmc.translatePath( "special://profile/Thumbnails" )
 
 user_data = xbmc.translatePath( "special://userdata")
-cachefile = os.path.join(user_data,'addon_data',__addonid__,'cachefile.txt')
-searchfile = os.path.join(user_data,'addon_data',__addonid__,'searchfile.txt')
+cachefile = os.path.join(user_data,'addon_data',os.path.basename(scriptPath),'cachefile.txt')
+searchfile = os.path.join(user_data,'addon_data',os.path.basename(scriptPath),'searchfile.txt')
 
 
 __resource__     =  os.path.join(scriptPath, 'resources')
@@ -53,7 +53,6 @@ extensions     = []
 items_selected = []
 
 
-
 def correct_bool(boolean):
 	return True if boolean == 'true' else False
 
@@ -62,7 +61,6 @@ logging  = correct_bool(__setting__('log'))
 def log(message):
 	if logging:
 		xbmc.log(msg = 'LooseFiles -=- ' + str(message))
-
 
 other_ext = __setting__('formats')
 
